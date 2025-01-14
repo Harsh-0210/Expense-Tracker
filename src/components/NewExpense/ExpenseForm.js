@@ -33,13 +33,19 @@ const ExpenseForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
+    if (!enteredTitle.trim() || !enteredAmount || !enteredDate) {
+      alert("*Please enter all the fields before adding an expense.");
+      return;
+    }
+
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
     props.onSaveExpenseData(expenseData);
+    console.log(expenseData);
     setEnteredAmount("");
     setEnteredDate("");
     setEnteredTitle("");
@@ -78,6 +84,7 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>Cancel</button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
